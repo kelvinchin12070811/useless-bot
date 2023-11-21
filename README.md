@@ -10,11 +10,11 @@ by building some "shit". It might not useful, but it was "fun to build" is the g
 
 ## Installation
 
-_🏗️ under construction_
+🏗️ _under construction_
 
 ## Usage
 
-_🏗️ under construction_
+🏗️ _under construction_
 
 ## License
 
