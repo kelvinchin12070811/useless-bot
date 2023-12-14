@@ -1,0 +1,25 @@
+# frozen_string_literal
+
+desc 'Build the Pocketbase\'s docker container.'
+task :build_dev_db do
+  Dir.chdir('./pocketbase')
+  system 'docker build -t kelvinchin12070811/useless-bot/pocketbase:0.20.0 .'
+end
+
+desc 'Start the Pocketbase\'s docker container in dev environment.'
+task :dev_pocketbase_up do
+  Dir.chdir('./pocketbase/dev')
+  exec 'docker-compose up'
+end
+
+desc 'Stop the Pocketbase\'s docker container in dev environment.'
+task :dev_pocketbase_stop do
+  Dir.chdir('./pocketbase/dev')
+  exec 'docker-compose down'
+end
+
+desc 'Start everything needed for dev environment.'
+task :dev do
+  system 'rake build_dev_db'
+  exec 'rake dev_pocketbase_up'
+end
