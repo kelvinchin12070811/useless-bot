@@ -9,17 +9,11 @@ end
 desc 'Start the Pocketbase\'s docker container in dev environment.'
 task :dev_pocketbase_up do
   Dir.chdir('./pocketbase/dev')
-  exec 'docker-compose up'
+  system 'docker-compose up -d'
 end
 
 desc 'Stop the Pocketbase\'s docker container in dev environment.'
-task :dev_pocketbase_stop do
+task :dev_pocketbase_down do
   Dir.chdir('./pocketbase/dev')
-  exec 'docker-compose down'
-end
-
-desc 'Start everything needed for dev environment.'
-task :dev do
-  system 'rake build_dev_db'
-  exec 'rake dev_pocketbase_up'
+  system 'docker-compose down'
 end
