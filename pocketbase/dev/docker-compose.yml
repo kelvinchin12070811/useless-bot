@@ -1,0 +1,15 @@
+services:
+  pocketbase:
+    image: kelvinchin12070811/useless-bot/pocketbase:0.20.0
+    volumes:
+      - pb_data:/app/pb_data
+      - pb_migrations:/app/pb_migrations
+
+volumes:
+  pb_data:
+  pb_migrations:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./pb_migrations
+      o: bind
