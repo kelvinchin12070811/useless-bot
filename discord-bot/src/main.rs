@@ -25,6 +25,7 @@ async fn main() {
         },
     };
 
+    println!("{:?}", config.bot_token);
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
             commands: get_commands::get_commands(),

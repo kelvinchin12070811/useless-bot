@@ -20,6 +20,7 @@ end
 
 desc 'Cargo run discord bot in dev environment.'
 task :dev do
+  require_relative('./env')
   Dir.chdir('./discord-bot')
   exec 'cargo run'
 end
