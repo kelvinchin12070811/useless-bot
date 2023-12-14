@@ -37,7 +37,7 @@ migrate((db) => {
       }
     ],
     "indexes": [],
-    "listRule": "",
+    "listRule": null,
     "viewRule": null,
     "createRule": null,
     "updateRule": null,
