@@ -1789,11 +1789,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "useless-bot"
+name = "useless_bot"
 version = "1.0.0"
 dependencies = [
  "chrono",
  "env_logger",
+ "log",
  "poise",
  "reqwest",
  "rusqlite",

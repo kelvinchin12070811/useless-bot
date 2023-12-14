@@ -1,4 +1,4 @@
-# frozen_string_literal
+# frozen_string_literal: true
 
 desc 'Build the Pocketbase\'s docker container.'
 task :build_dev_db do
