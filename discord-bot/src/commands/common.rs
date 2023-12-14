@@ -1,9 +1,9 @@
-use crate::types::{Context, Error};
+use crate::types::{Context, Result};
 use chrono::Utc;
 
 /// Get the bot's latency
 #[poise::command(slash_command)]
-pub async fn ping(ctx: Context<'_>) -> Result<(), Error> {
+pub async fn ping(ctx: Context<'_>) -> Result {
     let created = ctx.created_at();
     let current = Utc::now();
     let latency = current.timestamp_millis() - created.timestamp_millis();

@@ -1,5 +1,6 @@
 mod commands;
 mod config;
+mod events;
 mod types;
 
 use commands::get_commands;
@@ -46,6 +47,11 @@ async fn main() {
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
             commands: get_commands::get_commands(),
+            event_handler: |ctx, event, framework, data| {
+                Box::pin(events::default_event_handler::default_event_handler(
+                    ctx, event, framework, data,
+                ))
+            },
             ..Default::default()
         })
         .token(config.bot_token.clone())
