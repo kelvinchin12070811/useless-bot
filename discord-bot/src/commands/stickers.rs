@@ -26,5 +26,7 @@ pub async fn list(ctx: Context<'_>) -> Result {
         return Ok(());
     }
 
+    ctx.say(stickers.unwrap().join(", ")).await?;
+
     Ok(())
 }

@@ -6,6 +6,7 @@ use serde::Deserialize;
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
 #[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ListStickers {
     pub page: usize,
     pub per_page: usize,
@@ -27,6 +28,7 @@ impl Default for ListStickers {
 }
 
 #[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Sticker {
     pub id: String,
     pub collection_id: String,
