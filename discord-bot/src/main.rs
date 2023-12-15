@@ -14,7 +14,10 @@ use commands::get_commands;
 use env_logger::Builder;
 use log::{error, info, LevelFilter};
 use poise::serenity_prelude as serenity;
-use std::env;
+use std::{
+    env,
+    sync::{Arc, Mutex},
+};
 use types::Data;
 
 use crate::{
@@ -73,8 +76,7 @@ async fn main() {
     info!("Starting useless-bot...");
     info!("Reading environment variable...");
     let config = parse_config();
-    let mut api_auth_token_context: APIAuthTokenContext = Default::default();
-    let _token = api_service::get_auth_token(&config, &mut api_auth_token_context).await;
+    let api_auth_token_context = Arc::new(Mutex::new(APIAuthTokenContext::default()));
 
     info!("Building framework...");
     let framework = poise::Framework::builder()
@@ -92,7 +94,10 @@ async fn main() {
         .setup(move |ctx, _ready, framework| {
             Box::pin(async move {
                 poise::builtins::register_globally(ctx, &framework.options().commands).await?;
-                Ok(Data { config: config })
+                Ok(Data {
+                    config_context: config,
+                    api_auth_context: api_auth_token_context.clone(),
+                })
             })
         });
 
