@@ -1,5 +1,6 @@
 mod commands;
 mod contexts;
+mod dtos;
 mod events;
 mod services;
 mod types;
@@ -11,17 +12,13 @@ use poise::serenity_prelude as serenity;
 use std::env;
 use types::Data;
 
-use crate::contexts::{api_auth_token_context::APIAuthTokenContext, config_context::ConfigContext};
+use crate::{
+    contexts::{api_auth_token_context::APIAuthTokenContext, config_context::ConfigContext},
+    services::api_service,
+};
 
-#[tokio::main]
-async fn main() {
-    Builder::new()
-        .filter_module("useless_bot", LevelFilter::Trace)
-        .init();
-
-    info!("Starting useless-bot...");
-    info!("Reading environment variable...");
-    let config = ConfigContext {
+fn parse_config() -> ConfigContext {
+    ConfigContext {
         bot_token: match env::var("BOT_TOKEN") {
             Ok(val) => val,
             Err(_e) => {
@@ -43,10 +40,36 @@ async fn main() {
                 panic!()
             }
         },
-    };
-    let mut api_auth_token_context: APIAuthTokenContext = Default::default();
+        db_url: match env::var("DB_URL") {
+            Ok(val) => val,
+            Err(_e) => {
+                error!("Error, database url is required but it seems to be not provided!");
+                panic!()
+            }
+        },
+        token_expired_duration: match env::var("TOKEN_EXPIRED_DURATION") {
+            Ok(val) => val.parse::<u64>().unwrap(),
+            Err(_e) => {
+                error!(
+                    "Error, token expired duration is required but it seems to be not provided!"
+                );
+                panic!()
+            }
+        },
+    }
+}
 
-    services::api_service::db_auth(&config, &mut api_auth_token_context).await;
+#[tokio::main]
+async fn main() {
+    Builder::new()
+        .filter_module("useless_bot", LevelFilter::Trace)
+        .init();
+
+    info!("Starting useless-bot...");
+    info!("Reading environment variable...");
+    let config = parse_config();
+    let mut api_auth_token_context: APIAuthTokenContext = Default::default();
+    let _token = api_service::get_auth_token(&config, &mut api_auth_token_context).await;
 
     info!("Building framework...");
     let framework = poise::Framework::builder()
