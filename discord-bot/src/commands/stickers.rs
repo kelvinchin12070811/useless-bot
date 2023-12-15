@@ -26,7 +26,12 @@ pub async fn list(ctx: Context<'_>) -> Result {
         return Ok(());
     }
 
-    ctx.say(stickers.unwrap().join(", ")).await?;
+    ctx.send(|reply| {
+        reply.ephemeral(true);
+        reply.content(stickers.unwrap().join(", "));
+        reply
+    })
+    .await?;
 
     Ok(())
 }
