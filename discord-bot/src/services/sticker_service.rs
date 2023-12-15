@@ -7,9 +7,7 @@ use crate::api_service;
 use crate::contexts::{api_auth_token_context::APIAuthTokenContext, config_context::ConfigContext};
 use crate::dtos::pocketbase::collections;
 use log::{error, info};
-use reqwest::Url;
 use std::sync::{Arc, Mutex};
-use url_builder::URLBuilder;
 
 pub async fn get_all_stickers(
     config_context: &ConfigContext,
@@ -21,23 +19,14 @@ pub async fn get_all_stickers(
     }
 
     let url = {
-        let url = Url::parse(&config_context.db_url).unwrap();
-        let mut builder = URLBuilder::new();
+        let mut builder = config_context.get_db_url();
         builder
-            .set_protocol(url.scheme())
-            .set_host(match url.host_str() {
-                Some(host) => host,
-                None => "localhost",
-            })
-            .set_port(match url.port() {
-                Some(port) => port,
-                None => 8090,
-            })
             .add_route("api/collections/stickers/records")
             .add_param("sort", "+keyword");
         builder.build()
     };
     info!("Fetching stickers from {}", url);
+
     let client = reqwest::Client::new();
     let request = client.get(url).bearer_auth(token).send().await;
 
