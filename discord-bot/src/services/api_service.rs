@@ -1,6 +1,6 @@
 use std::{collections::HashMap, ops::Add};
 
-use crate::dtos::pocketbase::admin::auth_with_password::{self, AuthWithPassword};
+use crate::dtos::pocketbase::admin::auth_with_password::AuthWithPassword;
 use chrono::Utc;
 use log::{error, info};
 
@@ -16,7 +16,7 @@ pub async fn db_auth(config_context: &ConfigContext, auth_token_context: &mut AP
     let response = client
         .post(format!(
             "{}/api/admins/auth-with-password",
-            "http://localhost:8090"
+            config_context.db_url
         ))
         .json(&request_body)
         .send()
