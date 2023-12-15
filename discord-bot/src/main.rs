@@ -1,15 +1,17 @@
 mod commands;
-mod config;
+mod contexts;
 mod events;
+mod services;
 mod types;
 
 use commands::get_commands;
-use config::Config;
 use env_logger::Builder;
 use log::{error, info, LevelFilter};
 use poise::serenity_prelude as serenity;
 use std::env;
 use types::Data;
+
+use crate::contexts::{api_auth_token_context::APIAuthTokenContext, config_context::ConfigContext};
 
 #[tokio::main]
 async fn main() {
@@ -19,7 +21,7 @@ async fn main() {
 
     info!("Starting useless-bot...");
     info!("Reading environment variable...");
-    let config = Config {
+    let config = ConfigContext {
         bot_token: match env::var("BOT_TOKEN") {
             Ok(val) => val,
             Err(_e) => {
@@ -42,6 +44,9 @@ async fn main() {
             }
         },
     };
+    let mut api_auth_token_context: APIAuthTokenContext = Default::default();
+
+    services::api_service::db_auth(&config, &mut api_auth_token_context).await;
 
     info!("Building framework...");
     let framework = poise::Framework::builder()

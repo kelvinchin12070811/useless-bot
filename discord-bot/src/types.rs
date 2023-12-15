@@ -1,7 +1,7 @@
-use crate::config::Config;
+use crate::contexts::config_context::ConfigContext;
 
 pub struct Data {
-    pub config: Config,
+    pub config: ConfigContext,
 }
 
 pub type Error = Box<dyn std::error::Error + Send + Sync>;
