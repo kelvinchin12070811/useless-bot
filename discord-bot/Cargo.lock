@@ -1789,6 +1789,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "url-builder"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6c560d19163937c53680c515b82a9311c5a796691c67890b8ad579423123e194"
+
+[[package]]
 name = "useless_bot"
 version = "1.0.0"
 dependencies = [
@@ -1800,6 +1806,7 @@ dependencies = [
  "rusqlite",
  "serde",
  "tokio",
+ "url-builder",
 ]
 
 [[package]]
