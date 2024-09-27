@@ -1,4 +1,3 @@
-/target
-run.ps1
-/discord-bot/target
 /env.rb
+dist
+node_modules
