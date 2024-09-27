@@ -6,7 +6,8 @@
 import { REST, Routes, Client, GatewayIntentBits, CommandInteraction } from 'discord.js';
 import 'dotenv/config';
 
-import logger from './logger';
+import { logger } from './logger';
+import { commands } from './constants/commands';
 
 const TOKEN = process.env.TOKEN;
 const APPLICATION_ID = process.env.APPLICATION_ID;
@@ -20,13 +21,6 @@ if (!APPLICATION_ID) {
     logger.error('No application ID provided');
     process.exit(1);
 }
-
-const commands = [
-    {
-        name: 'ping',
-        description: 'Replies with Pong!',
-    },
-];
 
 const main = async () => {
     const rest = new REST({ version: '10' }).setToken(TOKEN);
