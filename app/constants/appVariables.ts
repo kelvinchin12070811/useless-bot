@@ -9,12 +9,14 @@ const TOKEN: string = process.env.TOKEN ?? '';
 const APPLICATION_ID: string = process.env.APPLICATION_ID ?? '';
 
 if (TOKEN === '') {
-    logger.error('No token provided');
+    logger.error('No token provided. Make sure the environment variable TOKEN is set.');
     process.exit(1);
 }
 
 if (APPLICATION_ID === '') {
-    logger.error('No application ID provided');
+    logger.error(
+        'No application ID provided. Make sure the environment variable APPLICATION_ID is set.'
+    );
     process.exit(1);
 }
 
