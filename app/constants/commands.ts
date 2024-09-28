@@ -7,11 +7,16 @@ import { ApplicationCommandOptionType } from 'discord.js';
 import { CommandReducer } from '../commands/command';
 import { ping } from '../commands/ping';
 import { sticker } from '../commands/sticker';
+import { about } from '../commands/about';
 
 export const commands = [
     {
         name: 'ping',
         description: 'Replies with Pong!',
+    },
+    {
+        name: 'about',
+        description: 'About this bot',
     },
     {
         name: 'sticker',
@@ -29,4 +34,5 @@ export const commands = [
 export const commandJumpTable: Record<string, CommandReducer> = {
     ping,
     sticker,
+    about,
 };
