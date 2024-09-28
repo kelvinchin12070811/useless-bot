@@ -3,13 +3,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
-import { Client, CommandInteraction, GatewayIntentBits } from 'discord.js';
+import { ChatInputCommandInteraction, Client, GatewayIntentBits } from 'discord.js';
 
 import { logger } from './logger';
 import { TOKEN } from './constants/appVariables';
 import { invokeCommand } from './commands/command';
 import { execIfNotProd } from './utils/functional';
-import { login, logout, pb } from './store/pbstore';
+import { login, logout } from './store/pbstore';
 
 let client: Client | null = null;
 
@@ -28,7 +28,7 @@ export async function initializeClient() {
 
     client.on('interactionCreate', async interaction => {
         if (!interaction.isCommand) return;
-        const commandInteraction = interaction as CommandInteraction;
+        const commandInteraction = interaction as ChatInputCommandInteraction;
 
         execIfNotProd(() => logger.debug('Received interaction:', commandInteraction.commandName));
 

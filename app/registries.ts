@@ -6,14 +6,23 @@
 import { REST, Routes } from 'discord.js';
 
 import { logger } from './logger';
-import { TOKEN, APPLICATION_ID } from './constants/appVariables';
+import { TOKEN, APPLICATION_ID, GUILD_ID } from './constants/appVariables';
 import { commands } from './constants/commands';
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 
 export async function registerCommands() {
     logger.info('Started refreshing application commands (slash commands).');
-    await rest.put(Routes.applicationCommands(APPLICATION_ID), { body: commands });
+
+    if (process.env.NODE_ENV !== 'production') {
+        logger.info('In development mode, only updating guild commands.');
+        await rest.put(Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID), {
+            body: commands,
+        });
+    } else {
+        logger.info('In production mode, updating global commands.');
+        await rest.put(Routes.applicationCommands(APPLICATION_ID), { body: commands });
+    }
 
     logger.info('Successfully reloaded application commands.');
 }
