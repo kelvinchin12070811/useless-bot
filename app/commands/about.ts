@@ -6,15 +6,15 @@
 import { CommandReducer } from './command';
 
 export const about: CommandReducer = async interaction => {
-    const { client } = interaction;
-    const username = client.user?.displayName;
+    const me = await interaction.guild?.members.fetchMe();
+    const displayName = me?.displayName ?? interaction.client.user.displayName;
 
     await interaction.reply({
         embeds: [
             {
                 title: 'About this bot',
                 description: [
-                    `${username} is a bot based on [useless-bot](https://github.com/kelvinchin12070811/useless-bot).`,
+                    `${displayName} is a bot based on [useless-bot](https://github.com/kelvinchin12070811/useless-bot).`,
                     'This bot have no idea what it can do nor what it will do, it is just created for exporing how a discord',
                     'bot can do or what it can achive.',
                 ].join(' '),
