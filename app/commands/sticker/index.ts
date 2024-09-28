@@ -7,10 +7,12 @@ import { logger } from '../../logger';
 import { pb } from '../../store/pbstore';
 import { execIfNotProd } from '../../utils/functional';
 import { CommandReducer } from '../command';
+import { preview } from './preview';
 import { simpleList } from './simple_list';
 
 const subcommandJumpTable: Record<string, CommandReducer> = {
     'simple-list': simpleList,
+    preview,
 };
 
 export const sticker: CommandReducer = async interaction => {

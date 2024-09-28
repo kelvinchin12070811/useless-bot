@@ -27,6 +27,19 @@ export const commands = [
                 description: 'A quick and dirty list of avaliable stickers to choose from',
                 type: ApplicationCommandOptionType.Subcommand,
             },
+            {
+                name: 'preview',
+                description: 'Preview a sticker',
+                type: ApplicationCommandOptionType.Subcommand,
+                options: [
+                    {
+                        name: 'sticker',
+                        description: 'The sticker to preview, only you can see the message.',
+                        type: ApplicationCommandOptionType.String,
+                        required: true,
+                    },
+                ],
+            },
         ],
     },
 ];
