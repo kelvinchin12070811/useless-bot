@@ -8,6 +8,7 @@ import { Client, CommandInteraction, GatewayIntentBits } from 'discord.js';
 import { logger } from './logger';
 import { TOKEN } from './constants/appVariables';
 import { invokeCommand } from './commands/command';
+import { execIfNotProd } from './utils/functional';
 
 let client: Client | null = null;
 
@@ -26,7 +27,7 @@ export function initializeClient() {
         if (!interaction.isCommand) return;
         const commandInteraction = interaction as CommandInteraction;
 
-        logger.info('Received interaction:', commandInteraction.commandName);
+        execIfNotProd(() => logger.debug('Received interaction:', commandInteraction.commandName));
 
         await invokeCommand(commandInteraction.commandName, commandInteraction);
     });

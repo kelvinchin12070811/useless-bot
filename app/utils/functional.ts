@@ -3,9 +3,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
-import { getLogger } from 'log4js';
 
-const logger = getLogger('useless-bot');
-logger.level = 'debug';
+import { logger } from '../logger';
 
-export { logger };
+/**
+ * Only execute the given closure if current enveronment is not production.
+ * @param closure The closure to execute.
+ */
+export function execIfNotProd(closure: () => void) {
+    if (process.env.NODE_ENV === 'production') return;
+
+    closure();
+}

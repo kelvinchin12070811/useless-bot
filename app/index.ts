@@ -31,4 +31,7 @@ process.on('SIGTERM', () => {
     process.exit(0);
 });
 
+logger.info('Starting up...');
+logger.info(`Current node environment: ${process.env.NODE_ENV}`);
+
 main();
