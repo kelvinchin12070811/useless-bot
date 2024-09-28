@@ -9,10 +9,13 @@ import { logger } from './logger';
 import { TOKEN } from './constants/appVariables';
 import { invokeCommand } from './commands/command';
 import { execIfNotProd } from './utils/functional';
+import { login, logout, pb } from './store/pbstore';
 
 let client: Client | null = null;
 
-export function initializeClient() {
+export async function initializeClient() {
+    await login();
+
     client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
     if (client == null) {
@@ -44,4 +47,6 @@ export function destroyClient() {
     logger.info('Destroying client.');
     client.destroy();
     logger.info('Client destroyed.');
+
+    logout();
 }

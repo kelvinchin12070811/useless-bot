@@ -7,6 +7,9 @@ import { logger } from '../logger';
 
 const TOKEN: string = process.env.TOKEN ?? '';
 const APPLICATION_ID: string = process.env.APPLICATION_ID ?? '';
+const API_USERNAME: string = process.env.API_USERNAME ?? '';
+const API_PASSWORD: string = process.env.API_PASSWORD ?? '';
+const API_URL: string = process.env.API_URL ?? '';
 
 if (TOKEN === '') {
     logger.error('No token provided. Make sure the environment variable TOKEN is set.');
@@ -20,4 +23,23 @@ if (APPLICATION_ID === '') {
     process.exit(1);
 }
 
-export { TOKEN, APPLICATION_ID };
+if (API_USERNAME === '') {
+    logger.error(
+        'No api username is provided. Make sure the environment variable API_USERNAME is set.'
+    );
+    process.exit(1);
+}
+
+if (API_PASSWORD === '') {
+    logger.error(
+        'No api password is provided. Make sure the environment variable API_PASSWORD is set.'
+    );
+    process.exit(1);
+}
+
+if (API_URL === '') {
+    logger.error('No api url is provided. Make sure the environment variable API_URL is set.');
+    process.exit(1);
+}
+
+export { TOKEN, APPLICATION_ID, API_USERNAME, API_PASSWORD, API_URL };
