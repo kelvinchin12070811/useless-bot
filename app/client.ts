@@ -7,6 +7,7 @@ import { Client, CommandInteraction, GatewayIntentBits } from 'discord.js';
 
 import { logger } from './logger';
 import { TOKEN } from './constants/appVariables';
+import { invokeCommand } from './commands/command';
 
 let client: Client | null = null;
 
@@ -21,16 +22,13 @@ export function initializeClient() {
         logger.info(`Logged in as ${client?.user?.tag}`);
     });
 
-    client.on('interactionCreate', async rawInteraction => {
-        const interaction = rawInteraction as CommandInteraction;
+    client.on('interactionCreate', async interaction => {
         if (!interaction.isCommand) return;
+        const commandInteraction = interaction as CommandInteraction;
 
-        logger.info('Received interaction:', interaction.commandName);
+        logger.info('Received interaction:', commandInteraction.commandName);
 
-        if ((interaction as CommandInteraction).commandName === 'ping') {
-            logger.info('Responding to ping command.');
-            await interaction.reply('Pong!');
-        }
+        await invokeCommand(commandInteraction.commandName, commandInteraction);
     });
 
     client.login(TOKEN);
