@@ -40,6 +40,19 @@ export const commands = [
                     },
                 ],
             },
+            {
+                name: 'send',
+                description: 'Send a sticker',
+                type: ApplicationCommandOptionType.Subcommand,
+                options: [
+                    {
+                        name: 'sticker',
+                        description: 'The sticker to send',
+                        type: ApplicationCommandOptionType.String,
+                        required: true,
+                    },
+                ],
+            },
         ],
     },
 ];
