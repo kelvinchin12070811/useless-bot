@@ -4,6 +4,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
 import {
+    AutocompleteInteraction,
     ChatInputCommandInteraction,
     Client,
     GatewayIntentBits,
@@ -15,6 +16,7 @@ import { TOKEN } from './constants/appVariables';
 import { invokeCommand, invokeMessageContextMenuCommand } from './commands/command';
 import { debugLog, execIfNotProd } from './utils/functional';
 import { login, logout } from './store/pbstore';
+import { invokeAutocomplete } from './autocomplete';
 
 let client: Client | null = null;
 
@@ -35,12 +37,19 @@ export async function initializeClient() {
         if (!interaction.isCommand) return;
 
         if (interaction.isMessageContextMenuCommand()) {
-            debugLog('Running Message Context Menu Command');
+            debugLog(`Running Message Context Menu Command: ${interaction.commandName}`);
             const commandInteraction = interaction as MessageContextMenuCommandInteraction;
             await invokeMessageContextMenuCommand(
                 commandInteraction.commandName,
                 commandInteraction
             );
+            return;
+        }
+
+        if (interaction.isAutocomplete()) {
+            debugLog(`Running Autocomplete Command: ${interaction.commandName}`);
+            const autocompleteInteraction = interaction as AutocompleteInteraction;
+            invokeAutocomplete(autocompleteInteraction.commandName, autocompleteInteraction);
             return;
         }
 
