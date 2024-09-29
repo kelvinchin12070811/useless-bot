@@ -3,12 +3,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
-import { ChatInputCommandInteraction, Client, GatewayIntentBits } from 'discord.js';
+import {
+    ChatInputCommandInteraction,
+    Client,
+    GatewayIntentBits,
+    MessageContextMenuCommandInteraction,
+} from 'discord.js';
 
 import { logger } from './logger';
 import { TOKEN } from './constants/appVariables';
-import { invokeCommand } from './commands/command';
-import { execIfNotProd } from './utils/functional';
+import { invokeCommand, invokeMessageContextMenuCommand } from './commands/command';
+import { debugLog, execIfNotProd } from './utils/functional';
 import { login, logout } from './store/pbstore';
 
 let client: Client | null = null;
@@ -28,6 +33,17 @@ export async function initializeClient() {
 
     client.on('interactionCreate', async interaction => {
         if (!interaction.isCommand) return;
+
+        if (interaction.isMessageContextMenuCommand()) {
+            debugLog('Running Message Context Menu Command');
+            const commandInteraction = interaction as MessageContextMenuCommandInteraction;
+            await invokeMessageContextMenuCommand(
+                commandInteraction.commandName,
+                commandInteraction
+            );
+            return;
+        }
+
         const commandInteraction = interaction as ChatInputCommandInteraction;
 
         execIfNotProd(() => logger.debug('Received interaction:', commandInteraction.commandName));

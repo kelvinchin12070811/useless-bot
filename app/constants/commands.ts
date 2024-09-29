@@ -3,12 +3,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
-import { ApplicationCommandOptionType } from 'discord.js';
-import { CommandReducer } from '../commands/command';
+import { ApplicationCommandOptionType, ApplicationCommandType } from 'discord.js';
+import { CommandReducer, MessageContextMenuCommandReducer } from '../commands/command';
 import { ping } from '../commands/ping';
 import { sticker } from '../commands/sticker';
 import { about } from '../commands/about';
 import { random } from '../commands/random';
+import { replyWithSticker } from '../commands/sticker/replyWithSticker';
 
 export const commands = [
     {
@@ -79,6 +80,10 @@ export const commands = [
             },
         ],
     },
+    {
+        name: 'Reply with sticker',
+        type: ApplicationCommandType.Message,
+    },
 ];
 
 export const commandJumpTable: Record<string, CommandReducer> = {
@@ -87,3 +92,8 @@ export const commandJumpTable: Record<string, CommandReducer> = {
     about,
     random,
 };
+
+export const messageContextMenuCommandJumpTable: Record<string, MessageContextMenuCommandReducer> =
+    {
+        'Reply with sticker': replyWithSticker,
+    };
