@@ -7,6 +7,6 @@ import log4js from 'log4js';
 const { getLogger } = log4js;
 
 const logger = getLogger('useless-bot');
-logger.level = 'debug';
+logger.level = process.env.NODE_ENV === 'production' ? 'info' : 'debug';
 
 export { logger };

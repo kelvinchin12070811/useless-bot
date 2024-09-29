@@ -20,6 +20,6 @@ export function execIfNotProd(closure: () => void) {
  * Log a debug message to the logger if the current environment is not production.
  * @param message The message to log.
  */
-export function debugLog(message: string) {
-    execIfNotProd(() => logger.debug(message));
+export function debugLog(message: string, ...args: any[]) {
+    execIfNotProd(() => logger.debug(message, args));
 }

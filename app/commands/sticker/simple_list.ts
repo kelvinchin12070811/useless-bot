@@ -11,7 +11,7 @@ import { CommandReducer } from '../command';
 
 export const simpleList: CommandReducer = async interaction => {
     const keyword = interaction.options.getString('keyword');
-    debugLog(`keyword is ${keyword}`);
+    debugLog('keyword is', keyword);
 
     if (keyword == null) {
         const stickers = await pb

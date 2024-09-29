@@ -47,8 +47,8 @@ export async function initializeClient() {
         }
 
         if (interaction.isAutocomplete()) {
-            debugLog(`Running Autocomplete Command: ${interaction.commandName}`);
             const autocompleteInteraction = interaction as AutocompleteInteraction;
+            debugLog('Running Autocomplete Command: ', autocompleteInteraction.commandName);
             invokeAutocomplete(autocompleteInteraction.commandName, autocompleteInteraction);
             return;
         }

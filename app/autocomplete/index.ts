@@ -6,16 +6,17 @@
 import { AutocompleteInteraction } from 'discord.js';
 import { logger } from '../logger';
 import { sticker } from './sticker';
+import { debugLog } from '../utils/functional';
 
 export type AutocompleteReducer = (interaction: AutocompleteInteraction) => Promise<void>;
 
 const autocompleteReducersJumpTable: Record<string, AutocompleteReducer> = {
     sticker,
-    keyword: sticker,
 };
 
 export async function invokeAutocomplete(command: string, interaction: AutocompleteInteraction) {
     const reducer = autocompleteReducersJumpTable[command];
+
     if (reducer == null) {
         throw new Error(`No reducer found for command ${command}`);
     }
