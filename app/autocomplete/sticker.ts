@@ -11,10 +11,13 @@ import { AutocompleteReducer } from './index';
 export const sticker: AutocompleteReducer = async interaction => {
     const query = interaction.options.getFocused();
     try {
-        const stickers = await pb.collection<StickerCollection>('stickers').getFullList(25, {
-            filter: `key~"${query || ''}"`,
-            sort: '+key',
-        });
+        const stickers = await pb
+            .collection<Pick<StickerCollection, 'key'>>('stickers')
+            .getFullList(25, {
+                filter: `key~"${query || ''}"`,
+                sort: '+key',
+                fields: 'key',
+            });
         await interaction.respond(
             stickers.map(sticker => ({ name: sticker.key, value: sticker.key }))
         );
