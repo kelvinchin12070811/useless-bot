@@ -43,6 +43,13 @@ export const commands = [
                 name: 'simple-list',
                 description: 'A quick and dirty list of avaliable stickers to choose from',
                 type: ApplicationCommandOptionType.Subcommand,
+                options: [
+                    {
+                        name: 'keyword',
+                        description: 'The keyword to search for',
+                        type: ApplicationCommandOptionType.String,
+                    },
+                ],
             },
             {
                 name: 'preview',

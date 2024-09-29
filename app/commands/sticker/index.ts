@@ -26,5 +26,9 @@ export const sticker: CommandReducer = async interaction => {
         return;
     }
 
-    await subcommandJumpTable[subcommand](interaction);
+    try {
+        await subcommandJumpTable[subcommand](interaction);
+    } catch (e) {
+        logger.error('Error in module "sticker": ', e);
+    }
 };
