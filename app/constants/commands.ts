@@ -8,6 +8,7 @@ import { CommandReducer } from '../commands/command';
 import { ping } from '../commands/ping';
 import { sticker } from '../commands/sticker';
 import { about } from '../commands/about';
+import { random } from '../commands/random';
 
 export const commands = [
     {
@@ -17,6 +18,22 @@ export const commands = [
     {
         name: 'about',
         description: 'About this bot',
+    },
+    {
+        name: 'random',
+        description: 'A sereis of functions that deals with random probability stuffs',
+        options: [
+            {
+                name: 'dice',
+                description: 'Roll a dice',
+                type: ApplicationCommandOptionType.Subcommand,
+            },
+            {
+                name: 'coin',
+                description: 'Flip a coin',
+                type: ApplicationCommandOptionType.Subcommand,
+            },
+        ],
     },
     {
         name: 'sticker',
@@ -61,4 +78,5 @@ export const commandJumpTable: Record<string, CommandReducer> = {
     ping,
     sticker,
     about,
+    random,
 };
