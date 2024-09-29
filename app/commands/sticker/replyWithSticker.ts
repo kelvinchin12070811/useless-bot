@@ -8,6 +8,7 @@ import { pb } from '../../store/pbstore';
 import { debugLog } from '../../utils/functional';
 import { MessageContextMenuCommandReducer } from '../command';
 import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
+import { v4 as uuid } from 'uuid';
 
 async function fetchSticker(key: string) {
     try {
@@ -19,7 +20,7 @@ async function fetchSticker(key: string) {
 }
 
 export const replyWithSticker: MessageContextMenuCommandReducer = async interaction => {
-    const modalID = `reply-with-sticker-prompt-${interaction.user.id}-${new Date().getUTCSeconds()}`;
+    const modalID = `reply-with-sticker-prompt-${interaction.user.id}-${uuid()}`;
     const modal = new ModalBuilder({
         customId: modalID,
         title: 'Reply with sticker',
