@@ -3,11 +3,19 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
+import { getClient } from '../../client';
 import { logger } from '../../logger';
 import { pb } from '../../store/pbstore';
 import { debugLog } from '../../utils/functional';
 import { MessageContextMenuCommandReducer } from '../command';
-import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
+import {
+    ActionRowBuilder,
+    ChannelType,
+    Message,
+    ModalBuilder,
+    TextInputBuilder,
+    TextInputStyle,
+} from 'discord.js';
 import { v4 as uuid } from 'uuid';
 
 async function fetchSticker(key: string) {
@@ -65,11 +73,13 @@ export const replyWithSticker: MessageContextMenuCommandReducer = async interact
             return;
         }
 
-        modalInteraction.reply(
-            interaction.targetMessage.author.bot || shouldSendSilently
-                ? `[sticker](${stickerURL})`
-                : `<@${interaction.targetMessage.author.id}>\n[sticker](${stickerURL})`
-        );
+        await modalInteraction.reply({ content: 'Sticker replied', ephemeral: true });
+        setTimeout(() => modalInteraction.deleteReply(), 2000);
+
+        await interaction.targetMessage.reply({
+            content: `[sticker](${stickerURL})\nTriggered by <@${interaction.user.id}>`,
+            allowedMentions: { parse: [], repliedUser: true },
+        });
     } catch (e) {
         if (interaction.replied) {
             logger.warn(`Failed to reply with a sticker: ${e}`);

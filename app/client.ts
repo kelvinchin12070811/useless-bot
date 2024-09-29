@@ -75,3 +75,7 @@ export function destroyClient() {
 
     logout();
 }
+
+export function getClient() {
+    return client;
+}
