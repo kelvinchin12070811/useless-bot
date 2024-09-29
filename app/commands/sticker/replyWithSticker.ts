@@ -41,16 +41,8 @@ export const replyWithSticker: MessageContextMenuCommandReducer = async interact
             style: TextInputStyle.Short,
         })
     );
-    const shouldMentionAuthorActionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(
-        new TextInputBuilder({
-            customId: 'shouldMentionAuthor',
-            label: "Mention author? (enter only 'y' or 'n')",
-            style: TextInputStyle.Short,
-            value: 'y',
-        })
-    );
 
-    modal.addComponents(targetStickerActionRow, shouldMentionAuthorActionRow);
+    modal.addComponents(targetStickerActionRow);
 
     try {
         await interaction.showModal(modal);
@@ -61,9 +53,6 @@ export const replyWithSticker: MessageContextMenuCommandReducer = async interact
         const targetSticker = modalInteraction.fields.getTextInputValue('targetSticker');
         debugLog(`targetSticker is ${targetSticker}`);
         const stickerURL = await fetchSticker(targetSticker);
-        const shouldSendSilently = !['y', 'Y'].includes(
-            modalInteraction.fields.getTextInputValue('shouldMentionAuthor')
-        );
 
         if (stickerURL == '') {
             await modalInteraction.reply({
