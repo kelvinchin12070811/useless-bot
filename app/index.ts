@@ -9,6 +9,10 @@ import { logger } from './logger';
 import { registerCommands } from './registries';
 import { destroyClient, initializeClient } from './client';
 
+if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'production';
+}
+
 const main = async () => {
     try {
         await registerCommands();
