@@ -6,7 +6,6 @@
 import { AutocompleteInteraction } from 'discord.js';
 import { logger } from '../logger';
 import { sticker } from './sticker';
-import { debugLog } from '../utils/functional';
 
 export type AutocompleteReducer = (interaction: AutocompleteInteraction) => Promise<void>;
 

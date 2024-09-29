@@ -15,11 +15,3 @@ export function execIfNotProd(closure: () => void) {
 
     closure();
 }
-
-/**
- * Log a debug message to the logger if the current environment is not production.
- * @param message The message to log.
- */
-export function debugLog(message: string, ...args: any[]) {
-    execIfNotProd(() => logger.debug(message, args));
-}

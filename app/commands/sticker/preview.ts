@@ -5,16 +5,16 @@
  **********************************************************************************************************************/
 import { logger } from '../../logger';
 import { pb } from '../../store/pbstore';
-import { execIfNotProd, debugLog } from '../../utils/functional';
+import { execIfNotProd } from '../../utils/functional';
 import { CommandReducer } from '../command';
 
 export const preview: CommandReducer = async interaction => {
     const targetSticker = interaction.options.getString('sticker');
 
-    debugLog(`Previewing sticker: ${targetSticker}`);
+    logger.debug(`Previewing sticker: ${targetSticker}`);
     try {
         const sitcker = await pb.collection('stickers').getFirstListItem(`key="${targetSticker}"`);
-        debugLog(`sticker content: ${JSON.stringify(sitcker)}`);
+        logger.debug(`sticker content: ${JSON.stringify(sitcker)}`);
         await interaction.reply({
             content: sitcker.url,
             ephemeral: true,

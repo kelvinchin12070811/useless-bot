@@ -14,7 +14,7 @@ import {
 import { logger } from './logger';
 import { TOKEN } from './constants/appVariables';
 import { invokeCommand, invokeMessageContextMenuCommand } from './commands/command';
-import { debugLog, execIfNotProd } from './utils/functional';
+import { execIfNotProd } from './utils/functional';
 import { login, logout } from './store/pbstore';
 import { invokeAutocomplete } from './autocomplete';
 
@@ -37,7 +37,7 @@ export async function initializeClient() {
         if (!interaction.isCommand) return;
 
         if (interaction.isMessageContextMenuCommand()) {
-            debugLog(`Running Message Context Menu Command: ${interaction.commandName}`);
+            logger.debug(`Running Message Context Menu Command: ${interaction.commandName}`);
             const commandInteraction = interaction as MessageContextMenuCommandInteraction;
             await invokeMessageContextMenuCommand(
                 commandInteraction.commandName,
@@ -48,7 +48,7 @@ export async function initializeClient() {
 
         if (interaction.isAutocomplete()) {
             const autocompleteInteraction = interaction as AutocompleteInteraction;
-            debugLog('Running Autocomplete Command: ', autocompleteInteraction.commandName);
+            logger.debug('Running Autocomplete Command: ', autocompleteInteraction.commandName);
             invokeAutocomplete(autocompleteInteraction.commandName, autocompleteInteraction);
             return;
         }

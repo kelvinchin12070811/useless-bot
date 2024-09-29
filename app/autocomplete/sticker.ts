@@ -7,7 +7,6 @@ import { AutocompleteInteraction } from 'discord.js';
 import { StickerCollection } from '../dto/sticker';
 import { logger } from '../logger';
 import { pb } from '../store/pbstore';
-import { debugLog } from '../utils/functional';
 import { AutocompleteReducer } from './index';
 
 export const sticker: AutocompleteReducer = async interaction => {

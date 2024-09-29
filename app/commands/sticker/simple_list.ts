@@ -6,12 +6,11 @@
 import { StickerCollection } from '../../dto/sticker';
 import { logger } from '../../logger';
 import { pb } from '../../store/pbstore';
-import { debugLog } from '../../utils/functional';
 import { CommandReducer } from '../command';
 
 export const simpleList: CommandReducer = async interaction => {
     const keyword = interaction.options.getString('keyword');
-    debugLog('keyword is', keyword);
+    logger.debug('keyword is', keyword);
 
     if (keyword == null) {
         const stickers = await pb
