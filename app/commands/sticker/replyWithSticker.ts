@@ -59,6 +59,11 @@ export const replyWithSticker: MessageContextMenuCommandReducer = async interact
                 : `<@${interaction.targetMessage.author.id}>\n[sticker](${stickerURL})`
         );
     } catch (e) {
+        if (interaction.replied) {
+            logger.warn(`Failed to reply with a sticker: ${e}`);
+            return;
+        }
+
         logger.error(e);
         await interaction.reply({
             content:
