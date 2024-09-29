@@ -14,7 +14,7 @@ export const simpleList: CommandReducer = async interaction => {
     debugLog(`keyword is ${keyword}`);
 
     if (keyword == null) {
-        const stickers = await pb.collection('stickers').getFullList();
+        const stickers = await pb.collection('stickers').getFullList({ sort: '+key' });
         await interaction.reply({
             content:
                 stickers.length === 0
@@ -27,7 +27,7 @@ export const simpleList: CommandReducer = async interaction => {
 
     const stickers = await pb
         .collection<StickerCollection>('stickers')
-        .getFullList({ filter: `key~"${keyword}"` });
+        .getFullList({ filter: `key~"${keyword}"`, sort: '+key' });
     await interaction.reply({
         content:
             stickers.length === 0
