@@ -10,6 +10,7 @@ import { sticker } from '../commands/sticker';
 import { about } from '../commands/about';
 import { random } from '../commands/random';
 import { replyWithSticker } from '../commands/sticker/replyWithSticker';
+import { letMeGoogleItForYou } from '../commands/letMeGoogleItForYou';
 
 export const commands = [
     {
@@ -84,6 +85,27 @@ export const commands = [
         name: 'Reply with sticker',
         type: ApplicationCommandType.Message,
     },
+    {
+        name: 'let-me-google-it-for-you',
+        description: "Help people that don't know how to use Google to search for stuffs.",
+        options: [
+            {
+                name: 'query',
+                description: 'The query to search for',
+                type: ApplicationCommandOptionType.String,
+                required: true,
+            },
+            {
+                name: 'provider',
+                description: 'The search engine to use, default to Google',
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                    { name: 'Google', value: 'google' },
+                    { name: 'DuckDuckGo', value: 'duckduckgo' },
+                ],
+            },
+        ],
+    },
 ];
 
 export const commandJumpTable: Record<string, CommandReducer> = {
@@ -91,6 +113,7 @@ export const commandJumpTable: Record<string, CommandReducer> = {
     sticker,
     about,
     random,
+    'let-me-google-it-for-you': letMeGoogleItForYou,
 };
 
 export const messageContextMenuCommandJumpTable: Record<string, MessageContextMenuCommandReducer> =
