@@ -73,13 +73,12 @@ export const replyWithSticker: MessageContextMenuCommandReducer = async interact
             return;
         }
 
-        await modalInteraction.reply({ content: 'Sticker replied', ephemeral: true });
-        setTimeout(() => modalInteraction.deleteReply(), 2000);
-
         await interaction.targetMessage.reply({
             content: `[sticker](${stickerURL})\nTriggered by <@${interaction.user.id}>`,
             allowedMentions: { parse: [], repliedUser: true },
         });
+
+        await modalInteraction.reply({ content: 'Sticker replied', ephemeral: true });
     } catch (e) {
         if (interaction.replied) {
             logger.warn(`Failed to reply with a sticker: ${e}`);
