@@ -6,11 +6,24 @@
 import { CommandReducer } from '../command';
 
 const coinEmojiMapping: Record<number, string> = {
-    0: '# :coin: Head!',
-    1: '# :coin: Tail!',
+    0: 'https://cdn3.emoji.gg/emojis/7245-coinflipheads.png',
+    1: 'https://cdn3.emoji.gg/emojis/24620-coinfliptails.png',
 };
 
 export const coin: CommandReducer = async interaction => {
     const flip = Math.floor(Math.random() * 2);
-    await interaction.reply({ content: coinEmojiMapping[flip] });
+    await interaction.reply({
+        embeds: [
+            {
+                title: flip === 0 ? 'Heads' : 'Tails',
+                thumbnail: {
+                    url: coinEmojiMapping[flip],
+                },
+                footer: {
+                    text: 'Icon made by emoji.gg',
+                    icon_url: 'https://emoji.gg/assets/img/logo.png?v=2',
+                },
+            },
+        ],
+    });
 };
