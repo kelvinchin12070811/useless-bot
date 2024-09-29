@@ -1,9 +1,0 @@
-FROM alpine:latest
-
-WORKDIR /app
-RUN apk update && apk add curl
-RUN curl -OL "https://github.com/pocketbase/pocketbase/releases/download/v0.20.0/pocketbase_0.20.0_linux_amd64.zip" && \
-    unzip pocketbase_0.20.0_linux_amd64.zip && \
-    chmod 755 ./pocketbase
-
-CMD ["./pocketbase", "serve", "--http", "0.0.0.0:8090"]

@@ -1,1 +1,6 @@
-/discord-bot/target
+/env.rb
+dist
+node_modules
+.env
+pocketbase/pocketbase.*
+pocketbase/pb_data
