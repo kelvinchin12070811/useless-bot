@@ -16,12 +16,16 @@ export async function registerCommands() {
 
     if (process.env.NODE_ENV !== 'production') {
         logger.info('In development mode, only updating guild commands.');
+        await rest.put(Routes.applicationCommands(APPLICATION_ID), { body: [] });
         await rest.put(Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID), {
             body: commands,
         });
     } else {
         logger.info('In production mode, updating global commands.');
         await rest.put(Routes.applicationCommands(APPLICATION_ID), { body: commands });
+        await rest.put(Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID), {
+            body: [],
+        });
     }
 
     logger.info('Successfully reloaded application commands.');
