@@ -3,6 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
+import { CommandDescriptor } from '../constants/commands';
 import { CommandReducer } from './command';
 
 export const about: CommandReducer = async interaction => {
@@ -27,4 +28,9 @@ export const about: CommandReducer = async interaction => {
         ],
         ephemeral: true,
     });
+};
+
+export const aboutCommandDescription: CommandDescriptor = {
+    name: 'about',
+    description: 'About this bot',
 };

@@ -4,8 +4,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
 
+import { CommandDescriptor } from '../constants/commands';
 import { CommandReducer } from './command';
 
 export const ping: CommandReducer = async interaction => {
     await interaction.reply('Pong!');
+};
+
+export const pingCommandDescription: CommandDescriptor = {
+    name: 'ping',
+    description: 'Replies with Pong!',
 };

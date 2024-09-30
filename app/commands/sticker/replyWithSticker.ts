@@ -3,10 +3,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
+import { CommandDescriptor } from '../../constants/commands';
 import { logger } from '../../logger';
 import { pb } from '../../store/pbstore';
 import { MessageContextMenuCommandReducer } from '../command';
-import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
+import {
+    ActionRowBuilder,
+    ApplicationCommandType,
+    ModalBuilder,
+    TextInputBuilder,
+    TextInputStyle,
+} from 'discord.js';
 import { v4 as uuid } from 'uuid';
 
 async function fetchSticker(key: string) {
@@ -72,4 +79,9 @@ export const replyWithSticker: MessageContextMenuCommandReducer = async interact
             ephemeral: true,
         });
     }
+};
+
+export const replyWithStickerCommandDescription: CommandDescriptor = {
+    name: 'Reply with sticker',
+    type: ApplicationCommandType.Message,
 };

@@ -3,6 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
+import { ApplicationCommandOptionType } from 'discord.js';
+import { CommandDescriptor } from '../../constants/commands';
 import { logger } from '../../logger';
 import { CommandReducer } from '../command';
 
@@ -74,4 +76,24 @@ export const choice: CommandReducer = async interaction => {
 
     const choice = choices[Math.floor(Math.random() * choices.length)];
     await interaction.reply(randomMessage(choice, choices));
+};
+
+export const choiceCommandDescription: CommandDescriptor = {
+    name: 'choice',
+    description: 'Choose from a list of choices',
+    type: ApplicationCommandOptionType.Subcommand,
+    options: [
+        {
+            name: 'choices',
+            description:
+                'The choices to choose from, separated by comma or sepcified with the seperator option',
+            type: ApplicationCommandOptionType.String,
+            required: true,
+        },
+        {
+            name: 'saperator',
+            description: 'The saperator to use to split the choices',
+            type: ApplicationCommandOptionType.String,
+        },
+    ],
 };

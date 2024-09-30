@@ -6,6 +6,8 @@
 import { CommandReducer } from '../command';
 import { pb } from '../../store/pbstore';
 import { StickerCollection } from '../../dto/sticker';
+import { CommandDescriptor } from '../../constants/commands';
+import { ApplicationCommandOptionType } from 'discord.js';
 
 export const send: CommandReducer = async interaction => {
     const targetSticker = interaction.options.getString('sticker');
@@ -17,4 +19,19 @@ export const send: CommandReducer = async interaction => {
     } catch (error) {
         await interaction.reply({ content: `Sticker ${targetSticker} not found`, ephemeral: true });
     }
+};
+
+export const sendCommandDescription: CommandDescriptor = {
+    name: 'send',
+    description: 'Send a sticker',
+    type: ApplicationCommandOptionType.Subcommand,
+    options: [
+        {
+            name: 'sticker',
+            description: 'The sticker to send',
+            type: ApplicationCommandOptionType.String,
+            required: true,
+            autocomplete: true,
+        },
+    ],
 };

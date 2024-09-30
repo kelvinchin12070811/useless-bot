@@ -3,6 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
+import { ApplicationCommandOptionType } from 'discord.js';
+import { CommandDescriptor } from '../../constants/commands';
 import { CommandReducer } from '../command';
 
 const coinEmojiMapping: Record<number, string> = {
@@ -26,4 +28,10 @@ export const coin: CommandReducer = async interaction => {
             },
         ],
     });
+};
+
+export const coinCommandDescription: CommandDescriptor = {
+    name: 'coin',
+    description: 'Flip a coin',
+    type: ApplicationCommandOptionType.Subcommand,
 };

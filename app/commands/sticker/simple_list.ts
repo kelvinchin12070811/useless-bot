@@ -3,6 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
+import { ApplicationCommandOptionType } from 'discord.js';
+import { CommandDescriptor } from '../../constants/commands';
 import { StickerCollection } from '../../dto/sticker';
 import { logger } from '../../logger';
 import { pb } from '../../store/pbstore';
@@ -39,4 +41,18 @@ export const simpleList: CommandReducer = async interaction => {
                 : stickers.map(sticker => sticker.key).join(', '),
         ephemeral: true,
     });
+};
+
+export const simpleListCommandDescription: CommandDescriptor = {
+    name: 'simple-list',
+    description: 'A quick and dirty list of avaliable stickers to choose from',
+    type: ApplicationCommandOptionType.Subcommand,
+    options: [
+        {
+            name: 'keyword',
+            description: 'The keyword to search for',
+            type: ApplicationCommandOptionType.String,
+            autocomplete: true,
+        },
+    ],
 };

@@ -3,6 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
+import { ApplicationCommandOptionType } from 'discord.js';
+import { CommandDescriptor } from '../../constants/commands';
 import { logger } from '../../logger';
 import { pb } from '../../store/pbstore';
 import { execIfNotProd } from '../../utils/functional';
@@ -27,4 +29,19 @@ export const preview: CommandReducer = async interaction => {
         });
         return;
     }
+};
+
+export const previewCommandDescription: CommandDescriptor = {
+    name: 'preview',
+    description: 'Preview a sticker',
+    type: ApplicationCommandOptionType.Subcommand,
+    options: [
+        {
+            name: 'sticker',
+            description: 'The sticker to preview, only you can see the message.',
+            type: ApplicationCommandOptionType.String,
+            required: true,
+            autocomplete: true,
+        },
+    ],
 };
