@@ -42,7 +42,14 @@ export const commands = [
                 options: [
                     {
                         name: 'choices',
-                        description: 'The choices to choose from, separated by comma',
+                        description:
+                            'The choices to choose from, separated by comma or sepcified with the seperator option',
+                        type: ApplicationCommandOptionType.String,
+                        required: true,
+                    },
+                    {
+                        name: 'saperator',
+                        description: 'The saperator to use to split the choices',
                         type: ApplicationCommandOptionType.String,
                     },
                 ],

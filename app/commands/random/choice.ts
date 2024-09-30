@@ -28,12 +28,35 @@ function randomMessage(choice: string, choices: string[]): string {
     }
 }
 
+/**
+ * Formate the outcome message to display the only choice from the list from a list of template randomly.
+ * @param choice The choice that was selected.
+ * @returns The formatted message.
+ */
+function randomMessageForOneItem(choice: string): string {
+    const limit = 3;
+    const index = Math.floor(Math.random() * limit);
+
+    switch (index) {
+        case 0:
+            return `What do you mean? \`${choice}\` is the only choice!`;
+        case 1:
+            return `Are you kidding me? There's just \`${choice}\`!`;
+        case 2:
+            return `Ho ho ho! I can only choose from \`${choice}\`!`;
+        default:
+            return '';
+    }
+}
+
 export const choice: CommandReducer = async interaction => {
+    const saperator: string = interaction.options.getString('saperator') ?? ',';
     const choices: string[] = (interaction.options.getString('choices') ?? '')
-        .split(',')
+        .split(saperator)
         .map((choice: string) => choice.trim())
         .filter((choice: string) => choice.length > 0);
 
+    logger.debug(`[random][choice] Saperator: ${saperator}`);
     logger.debug(`[random][choice] Length: ${choices.length}, Choices: ${JSON.stringify(choices)}`);
 
     if (choices.length <= 0) {
@@ -41,6 +64,11 @@ export const choice: CommandReducer = async interaction => {
             content: 'You need to provide at least two choices.',
             ephemeral: true,
         });
+        return;
+    }
+
+    if (choices.length === 1) {
+        await interaction.reply(randomMessageForOneItem(choices[0]));
         return;
     }
 
