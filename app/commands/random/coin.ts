@@ -22,7 +22,7 @@ export const coin: CommandReducer = async interaction => {
                     url: coinEmojiMapping[flip],
                 },
                 footer: {
-                    text: 'Icon made by emoji.gg (https://emoji.gg)',
+                    text: 'Icon made by emoji.gg',
                     icon_url: 'https://emoji.gg/assets/img/logo.png?v=2',
                 },
             },
