@@ -4,12 +4,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  **********************************************************************************************************************/
 import { CommandReducer } from '../command';
+import { choice } from './choice';
 import { coin } from './coin';
 import { dice } from './dice';
 
 const commandJumpTable: Record<string, CommandReducer> = {
     dice,
     coin,
+    choice,
 };
 
 export const random: CommandReducer = async interaction => {

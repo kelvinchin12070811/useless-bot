@@ -35,6 +35,18 @@ export const commands = [
                 description: 'Flip a coin',
                 type: ApplicationCommandOptionType.Subcommand,
             },
+            {
+                name: 'choice',
+                description: 'Choose from a list of choices',
+                type: ApplicationCommandOptionType.Subcommand,
+                options: [
+                    {
+                        name: 'choices',
+                        description: 'The choices to choose from, separated by comma',
+                        type: ApplicationCommandOptionType.String,
+                    },
+                ],
+            },
         ],
     },
     {
